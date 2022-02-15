@@ -1,0 +1,5 @@
+#__pycache__ directory
+__pycache__/
+
+#Any Samples should be ignored:
+sample*.*
