@@ -8,14 +8,35 @@
 # For each 1: Set to Odd, for each 0: Set to Even                                                 #
 # We ++ in encoding if RGB value is bigger than or equal to 128                                   #
 # We -- in encoding if RGB value is smaller than 128                                              #
+# The above action is not reversible, but who cares? we are not gonna need the original image.    #
 ###################################################################################################
 
 from image_man import *
-from text_man import *
+
+def hide_3_bits(pix, x: int, y: int, bits: list):
+    pixel = get_rgba_pixel(pix, x, y)
+    sign = [-1+2*(int(bits[j]) <= 128) for j in range(3)]
+    for i in range(3):
+        if bits[i]%2 != pixel[i]%2:
+            pixel[i] += sign[i]
 
 def init_encode(code_bits: str, imagesrc: str):
+    # Read the image
     im, pix = read_image(imagesrc)
+
+    # if the image is too small, we cannot hide the text
     if image_pixel_count(im) < len(code_bits):
-        print("This text is too large for this picture (size mismatch error)")
+        print("The text is too large for this picture {%d/%d} (size mismatch error)" % (len(code_bits), image_pixel_count(im)))
         return 2
-    pass
+    
+    # write the code to the image
+    x, y = 0, 0
+    for i in range(0, len(code_bits), 32):
+        # add another byte to the end of the bits to make it's length divisible by 3
+        bits_33 = code_bits[i:i+32] + str(get_33rd_byte(im, pix, x, y)%2)
+
+        for j in range(11):
+            # hide the 3 bits in each pixel
+            hide_3_bits(pix, x, y, bits_33[j*3:j*3+3])
+    
+    write_image(im, imagesrc.replace('.', '_encoded.'))
