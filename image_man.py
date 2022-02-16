@@ -71,7 +71,7 @@ def get_33rd_byte(im, pix, x, y) -> int:
     Returns the 33rd byte of the pixel after the given coordinates.
     """
     width = im.size[0]
-    return (pix[x + (11%width)-1, y + (11/width)])[2]
+    return (pix[((x +11)%width)-1, y + ((x+11)//width)])[2]
 
 def set_pixel(pix, x, y, pixel: tuple):
     """

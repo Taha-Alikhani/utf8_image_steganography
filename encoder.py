@@ -19,14 +19,16 @@ def hide_3_bits(pix, x: int, y: int, bits: list):
     for i in range(3):
         if int(bits[i])%2 != pixel[i]%2:
             pixel[i] += sign[i]
+    
+    set_rgba_pixel(pix, x, y, pixel)
 
 def init_encode(code_bits: str, imagesrc: str):
     # Read the image
     im, pix = read_image(imagesrc)
 
     # if the image is too small, we cannot hide the text
-    if image_pixel_count(im) < len(code_bits):
-        print("The text is too large for this picture {%d/%d} (size mismatch error)" % (len(code_bits), image_pixel_count(im)))
+    if image_pixel_count(im) < len(code_bits)*11/32:
+        print("The text is too large for this picture {%d/%d} (size mismatch error)" % (len(code_bits)*11/32, image_pixel_count(im)))
         return 2
     
     # write the code to the image
@@ -37,5 +39,10 @@ def init_encode(code_bits: str, imagesrc: str):
         for j in range(11):
             # hide the 3 bits in each pixel
             hide_3_bits(pix, x, y, bits_33[j*3:j*3+3])
+            # move to the next pixel
+            x += 1
+            if x == im.size[0]:
+                x = 0
+                y += 1
     
     write_image(im, imagesrc.replace('.', '_encoded.'))
