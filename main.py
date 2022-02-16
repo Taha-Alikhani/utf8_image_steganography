@@ -69,6 +69,9 @@ or just run the program without any arguments to see the menu""")
         
     elif mode == 2:
         init_decode(imagesrc)
-else:
-    print("I didn't program this part yet, sorry")
-    print("use arguements to test the program")
+
+    else:
+        #TODO: add menu
+        print("Menu should be here")
+        print("I didn't program this part yet, sorry")
+        print("use arguements to test the program or -h or --help for help")
