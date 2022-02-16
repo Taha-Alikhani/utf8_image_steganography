@@ -1,6 +1,9 @@
 import sys, getopt
+
+from image_man import check_image_mode
 from text_man import *
 from encoder import init_encode
+from decoder import init_decode
 
 argumentList = sys.argv[1:]
 options = "hc:t:i:d:"
@@ -39,6 +42,7 @@ or just run the program without any arguments to see the menu""")
                 
             elif currentArgument in ("-i", "--image"):
                 imagesrc = currentValue
+                if not check_image_mode(imagesrc): raise Exception("This image mode is not compatible with this program")
             
             elif currentArgument in ("-d", "--decode"):
                 if(mode != -1): raise Exception("You can't use -d and other arguments at the same time")
@@ -65,7 +69,7 @@ or just run the program without any arguments to see the menu""")
         
     elif mode == 2:
         #TODO
-        #init_decode(imagesrc)
+        init_decode(imagesrc)
         pass
 else:
     print("I didn't program this part yet, sorry")

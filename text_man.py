@@ -27,3 +27,11 @@ def bytes_to_bin(bytes_code: list) -> list:
             bin_code.extend([bits_32[i:i+8] for i in range(0, 32, 8)])
     bin_code.extend(["00000000"]*4) #An extra 4 bits to recognize the end of the file
     return bin_code
+
+def save_file(filename: str, string: str) -> None:
+    """
+    Saves the text to a file.
+    """
+    f = open(filename, "w")
+    f.write(string)
+    f.close()

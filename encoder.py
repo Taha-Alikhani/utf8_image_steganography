@@ -14,8 +14,11 @@
 from image_man import *
 
 def hide_3_bits(pix, x: int, y: int, bits: list):
+    """
+    Hides the 3 bits in the pixel at (x,y)
+    """
     pixel = get_rgba_pixel(pix, x, y)
-    sign = [-1+2*(int(bits[j]) <= 128) for j in range(3)]
+    sign = [-1+2*(int(pixel[j]) <= 128) for j in range(3)]
     for i in range(3):
         if int(bits[i])%2 != pixel[i]%2:
             pixel[i] += sign[i]
@@ -23,6 +26,9 @@ def hide_3_bits(pix, x: int, y: int, bits: list):
     set_rgba_pixel(pix, x, y, pixel)
 
 def init_encode(code_bits: str, imagesrc: str):
+    """
+    Initializes the encoder and returns the encoded image.
+    """
     # Read the image
     im, pix = read_image(imagesrc)
 

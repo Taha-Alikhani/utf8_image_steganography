@@ -84,3 +84,10 @@ def set_rgba_pixel(pix, x, y, pixel: RGBA):
     Sets the pixel at the given coordinates to the given RGBA object.
     """
     pix[x, y] = (pixel.r, pixel.g, pixel.b, pixel.a)
+
+def check_image_mode(imagesrc) -> bool:
+    """
+    Checks if the image mode is compatible with the program.
+    """
+    im = Image.open(imagesrc)
+    return len(im.mode) >= 3
