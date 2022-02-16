@@ -3,7 +3,6 @@ from text_man import *
 from encoder import init_encode
 
 argumentList = sys.argv[1:]
-print(argumentList)
 options = "hc:t:i:d:"
 long_options = ["help", "code", "text =", "image =", "decode ="]
 
@@ -54,13 +53,18 @@ or just run the program without any arguments to see the menu""")
     if mode == 0:
         code_bytes = str_to_bytes([text])
         code_bits = bytes_to_bin(code_bytes)
-        init_encode(code_bits, imagesrc)
+        final_bin = ''.join(code_bits)
+        init_encode(final_bin, imagesrc)
     elif mode == 1:
         text_list = read_file(filename)
         code_bytes = str_to_bytes(text_list)
         code_bits = bytes_to_bin(code_bytes)
-        init_encode(code_bits, imagesrc)
+        final_bin = ''.join(code_bits)
+        init_encode(final_bin, imagesrc)
     elif mode == 2:
         #TODO
         #init_decode(imagesrc)
         pass
+
+print("I didn't program this part yet, sorry")
+print("use arguements to test the program")

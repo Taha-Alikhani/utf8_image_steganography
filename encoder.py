@@ -17,7 +17,7 @@ def hide_3_bits(pix, x: int, y: int, bits: list):
     pixel = get_rgba_pixel(pix, x, y)
     sign = [-1+2*(int(bits[j]) <= 128) for j in range(3)]
     for i in range(3):
-        if bits[i]%2 != pixel[i]%2:
+        if int(bits[i])%2 != pixel[i]%2:
             pixel[i] += sign[i]
 
 def init_encode(code_bits: str, imagesrc: str):
@@ -34,7 +34,6 @@ def init_encode(code_bits: str, imagesrc: str):
     for i in range(0, len(code_bits), 32):
         # add another byte to the end of the bits to make it's length divisible by 3
         bits_33 = code_bits[i:i+32] + str(get_33rd_byte(im, pix, x, y)%2)
-
         for j in range(11):
             # hide the 3 bits in each pixel
             hide_3_bits(pix, x, y, bits_33[j*3:j*3+3])
