@@ -68,9 +68,7 @@ or just run the program without any arguments to see the menu""")
         init_encode(final_bin, imagesrc)
         
     elif mode == 2:
-        #TODO
         init_decode(imagesrc)
-        pass
 else:
     print("I didn't program this part yet, sorry")
     print("use arguements to test the program")
