@@ -42,6 +42,7 @@ or just run the program without any arguments to see the menu""")
                 
             elif currentArgument in ("-i", "--image"):
                 imagesrc = currentValue
+                if not imagesrc.endswith('.png'): raise Exception("The image must be a .png file (for now)")
                 if not check_image_mode(imagesrc): raise Exception("This image mode is not compatible with this program")
             
             elif currentArgument in ("-d", "--decode"):
