@@ -6,8 +6,8 @@
 # Encoding algorithm:                                                                             #
 # For every bit on the character, we change the RGB value of the pixel, using this policy:        #
 # For each 1: Set to Odd, for each 0: Set to Even                                                 #
-# We ++ in encoding if RGB value is bigger than or equal to 128                                   #
-# We -- in encoding if RGB value is smaller than 128                                              #
+# We -- in encoding if RGB value is bigger than or equal to 128                                   #
+# We ++ in encoding if RGB value is smaller than 128                                              #
 # The above action is not reversible, but who cares? we are not gonna need the original image.    #
 ###################################################################################################
 
@@ -15,10 +15,10 @@ from image_man import *
 
 def hide_3_bits(pix, x: int, y: int, bits: list):
     """
-    Hides the 3 bits in the pixel at (x,y)
+    Hides 3 bits in the pixel at (x,y)
     """
     pixel = get_rgba_pixel(pix, x, y)
-    sign = [-1+2*(int(pixel[j]) <= 128) for j in range(3)]
+    sign = [-1+2*(int(pixel[j]) < 128) for j in range(3)]
     for i in range(3):
         if int(bits[i])%2 != pixel[i]%2:
             pixel[i] += sign[i]
@@ -27,7 +27,7 @@ def hide_3_bits(pix, x: int, y: int, bits: list):
 
 def init_encode(code_bits: str, imagesrc: str):
     """
-    Initializes the encoder and returns the encoded image.
+    Initializes the encoder and writes the encoded image.
     """
     # Read the image
     im, pix = read_image(imagesrc)
