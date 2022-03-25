@@ -6,8 +6,8 @@ from encoder import init_encode
 from decoder import init_decode
 
 argumentList = sys.argv[1:]
-options = "hc:t:i:d:"
-long_options = ["help", "code", "text =", "image =", "decode ="]
+options = "hc:f:i:d:"
+long_options = ["help", "code", "file =", "image =", "decode ="]
 
 #Variables
 mode = -1 #0: code 1: file 2: decode
@@ -25,23 +25,24 @@ if __name__ == "__main__":
                 print ("""
 -h, --help: print this help message
 -c, --code: the code you want to put in the image, as a string
--t, --text: text file to read the code from
+-f, --file: text file to read the code from
 -i, --image: image to put the code in
 example: python3 main.py -c "Hello World!" -i image.png
 or just run the program without any arguments to see the menu""")
                 
             elif currentArgument in ("-c", "--code"):
-                if(mode != -1): raise Exception("You can't use -c and -t at the same time")
+                if(mode != -1): raise Exception("You can't use -c and -f at the same time")
                 text = currentValue
                 mode = 0
 
-            elif currentArgument in ("-t", "--text"):
-                if(mode != -1): raise Exception("You can't use -c and -t at the same time")
+            elif currentArgument in ("-f", "--file"):
+                if(mode != -1): raise Exception("You can't use -c and -f at the same time")
                 filename = currentValue
                 mode = 1
                 
             elif currentArgument in ("-i", "--image"):
                 imagesrc = currentValue
+                if not imagesrc.endswith('.png'): raise Exception("The image must be a .png file (for now)")
                 if not check_image_mode(imagesrc): raise Exception("This image mode is not compatible with this program")
             
             elif currentArgument in ("-d", "--decode"):
@@ -68,9 +69,10 @@ or just run the program without any arguments to see the menu""")
         init_encode(final_bin, imagesrc)
         
     elif mode == 2:
-        #TODO
         init_decode(imagesrc)
-        pass
-else:
-    print("I didn't program this part yet, sorry")
-    print("use arguements to test the program")
+
+    else:
+        #TODO: add menu
+        print("Menu should be here")
+        print("I didn't program this part yet, sorry")
+        print("use arguements to test the program or -h or --help for help")
